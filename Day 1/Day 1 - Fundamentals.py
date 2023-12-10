@@ -78,3 +78,58 @@ for word in tweet_tokens:
 
 print(f'Cleaned and tokenized tweets:\n {clean_tweets}')        # Inspecting the cleaned and tokenized tweets
 print(f'\nPunctuations: {string.punctuation}')                  # Inspecting the Punctuations
+
+
+'''
+In this tutorial, I learnt about String Tokenization, stop word and punctutation in NPL. I implemented TweetTokenizer and removed 
+stopwords and punctuation from the tokenized tweets.
+'''
+
+
+# -----------------------------------------------------------------------------------------------------
+
+
+'''
+Stemming in NLP:
+    Stemming is a process of converting a word to its most General form or Stem. It's basically the process of removing the suffix
+    from a word and reduce it to it's root word. It helps in reducing the size of Vocabulary. 
+    Types of Stemmers:
+    1) Porter Stemmer: It is one of the most common and gentle stemmer which is very fast but not very precise.
+    2) Snowball Stemmer: It's actual name is English Stemmer is more precise over large Dataset.
+    3) Lancaster Stemmer: It is very aggrssive algorithm. It will hugely trim down the working data which itself has pros and cons.
+
+    Reasons for stemming:
+    > Text Normalization (eg. running, runs, and ran would be stemmmed to base form 'run')
+    > Reducing Dimensionality 
+    > Improving text retrieval 
+    > Reducing spelling variations
+'''
+
+# Downloading the libraries and Dependencies
+from nltk.stem.porter import PorterStemmer
+from nltk.stem.snowball import SnowballStemmer
+from nltk.stem.lancaster import LancasterStemmer
+
+# Porter Stemmer
+stemmer = PorterStemmer()                                   # Instantiating Stemmer class
+stemWords = [stemmer.stem(word) for word in clean_tweets]
+print(f"Porter Stemmer: {' '.join(stemWords)}")             # Inspecting the result
+
+# Snowball Stemmer
+stemmer = SnowballStemmer()                                 # Instantiating Snowball Stemmer class
+stemWords = [stemmer.stem(word) for word in clean_tweets]
+print(f"\nSnowball Stemmer: {' '.join(stemWords)}")         # Inspecting the result
+
+# Lancaster Stemmer
+stemmer = LancasterStemmer()                                # Instantiating Lancaster Stemmer class
+stemWords = [stemmer.stem(word) for word in clean_tweets]
+print(f"\nLancaster Stemmer: {' '.join(stemWords)}")        # Inspecting the result
+
+
+'''
+In this tutorial, I implemented porter, snowball and lancaster stemmers.
+'''
+
+# -----------------------------------------------------------------------------------------------------
+
+
