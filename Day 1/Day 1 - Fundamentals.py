@@ -132,4 +132,59 @@ In this tutorial, I implemented porter, snowball and lancaster stemmers.
 
 # -----------------------------------------------------------------------------------------------------
 
+'''
+Lemmatization in NLP:
+    Lemmatization is the process of grouping together the inflected forms of words so that they can be 
+    analysed as a single item, identified by the word's Lemma or a Dictionary form. It is the process where 
+    individual tokens from a sentence or words are reduced to their base form. 
+    Lemmatization is much more informative than simple stemming. 
+    eg.
+        Original tokens: ['The', 'cats', 'are', 'running', 'and', 'the', 'mice', 'are', 'hiding', '.']
+        Lemmatized tokens: ['The', 'cat', 'are', 'running', 'and', 'the', 'mouse', 'are', 'hiding', '.']
 
+'''
+
+# Downloading the libraries and dependencies
+import nltk
+import spacy
+from nltk.stem import WordNetLemmatizer
+from spacy.lookups import Lookups
+
+nlp = spacy.load('en_core_web_sm')
+def Lemmatizer(token):                              # In Spacy v3, spacy.lemmatizer doesnt work
+    return token.lemma_                             # default lemmatizer
+
+words_l = ['dogs','cats','apples','sings','brings'] # Example of words to be lemmatized
+
+# In SpaCy v2
+# Implementation of Lemmatization with SpaCy
+# lookups = Lookups()
+# lookups.add_table('lemma_rules',{'noun':[['s','']]}) 
+# lemmatizer = Lemmatizer(lookups)
+
+'''
+
+In SpaCy v3, the need for explicit use of Lookups has been minimized because lemmatization and other linguistic 
+features are now integrated into the Doc object during processing
+'''
+for word in words_l:
+    doc = nlp(word)
+    # Lemmatization is already performed during processing, but you can still use your custom function
+    lemma = Lemmatizer(doc[0])
+    print(f'Lemmatization with SpaCy: {lemma}')
+
+# Implementation of Lemmatization with NLTK
+lemmatizer = WordNetLemmatizer()                    # Instantiating the Lemmatization class
+
+nltk.download('wordnet')
+
+for word in words_l:
+    lemma = lemmatizer.lemmatize(word)
+    print(f'Lemmatization with NLTK: {lemma}')
+
+
+'''
+In this tutorial, I learned about the lemmatization and its simple implementation using SpaCy and NLTK.
+Also, during this tutorial, I got stuck with SpaCy v3 as the use of lemmatizer is different from that of 
+SpaCy v2.
+'''
