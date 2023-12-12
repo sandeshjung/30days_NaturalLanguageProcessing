@@ -103,3 +103,20 @@ Word segmentation:
     For example, in Chinese, the three-character string: 爱国人 (ai4 "love" (verb), guo2 "country", ren2 "person") could be tokenized as 
     爱国 / 人, "country-loving person" or as 爱 / 国人, "love country-person."
 '''
+
+def segment(text, segs):
+    words = []
+    last = 0
+    for i in range(len(segs)):
+        if segs[i] == '1':
+            words.append(text[last:i+1])
+            last = i + 1
+    words.append(text[last:])
+    return words
+
+text = "doyouseethekittyseethedoggydoyoulikethekittylikethedoggy"
+seg1 = "0000000000000001000000000010000000000000000100000000000"
+seg2 = "0100100100100001001001000010100100010010000100010010000"
+
+segment(text, seg1)
+segment(text, seg2)
