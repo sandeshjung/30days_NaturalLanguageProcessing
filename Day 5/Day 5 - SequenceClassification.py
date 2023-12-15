@@ -64,4 +64,36 @@ if we decide to label a word as a noun, but later find evidence that it should h
 to go back and fix our mistake. One solution to this problem is to adopt a transformational strategy instead. 
 Transformational joint classifiers work by creating an initial assignment of labels for the inputs, 
 and then iteratively refining that assignment in an attempt to repair inconsistencies between related inputs.
+
+Another solution is to assign scores to all of the possible sequences of part-of-speech tags, and to choose the sequence 
+whose overall score is highest. This is the approach taken by Hidden Markov Models. Hidden Markov Models are similar to 
+consecutive classifiers in that they look at both the inputs and the history of predicted tags. However, rather than simply 
+finding the single best tag for a given word, they generate a probability distribution over tags. These probabilities are then 
+combined to calculate probability scores for tag sequences, and the tag sequence with the highest probability is chosen.
+
 '''
+
+# Sentence Segmentation
+sents = nltk.corpus.treebank_raw.sents()
+tokens = []
+boundaries = set()
+offset = 0
+for sent in sents:
+    tokens.extend(sent)
+    offset += len(sent)
+    boundaries.add(offset-1)
+
+def punct_features(tokens, i):
+    return {'next-word-capitalized': tokens[i+1][0].isupper(),
+            'prev-word': tokens[i-1].lower(),
+            'punct': tokens[i],
+            'prev-word-is-one-char': len(tokens[i-1]) == 1}
+
+featuresets = [(punct_features(tokens,i), (i in boundaries))
+               for i in range(1, len(tokens)-1)
+               if tokens[i] in '.?!']
+
+size = int(len(featuresets) * 0.1)
+train_set, test_set = featuresets[size:], featuresets[:size]
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+nltk.classify.accuracy(classifier, test_set)
