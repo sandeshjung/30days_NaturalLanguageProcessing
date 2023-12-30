@@ -161,3 +161,10 @@ cython_debug/
 tmp
 .model/
 .vocab/
+
+
+# Ignore the "content" folder
+/content/
+
+# Ignore files with ".gz" extension
+*.gz
