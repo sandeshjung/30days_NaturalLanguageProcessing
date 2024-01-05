@@ -58,3 +58,28 @@ for i, (input_text, target_text) in enumerate(zip(input_texts, target_texts)):
         if t>0:
             decoder_target_data[i, t-1, target_token_index[char]]=1
 
+
+
+# Construct and train character sequence encoder-decoder network
+from keras.models import Model
+from keras.layers import Input, LSTM, Dense
+batch_size = 64
+epochs = 100
+num_neurons = 256
+encoder_inputs = Input(shape=(None, input_vocab_size))
+encoder = LSTM(num_neurons, return_state=True)
+encoder_outputs, state_h, state_c = encoder(encoder_inputs)
+encoder_states = [state_h, state_c]
+decoder_inputs = Input(shape=(None, output_vocab_size))
+decoder_lstm = LSTM(num_neurons, return_sequences=True,
+return_state=True)
+decoder_outputs, _, _ = decoder_lstm(decoder_inputs,
+initial_state=encoder_states)
+decoder_dense = Dense(output_vocab_size, activation='softmax')
+decoder_outputs = decoder_dense(decoder_outputs)
+model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy',
+metrics=['acc'])
+model.fit([encoder_input_data, decoder_input_data],
+decoder_target_data, batch_size=batch_size, epochs=epochs,
+validation_split=0.1)
