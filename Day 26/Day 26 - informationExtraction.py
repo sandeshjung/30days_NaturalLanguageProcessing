@@ -97,3 +97,14 @@ def doc_dataframe(doc):
     return pd.DataFrame([token_dict(tok) for tok in doc])
 
 doc_dataframe(en_model("In 1541 Desoto met the Pascagoula."))
+
+
+'''
+Entity name normalization
+    The normalized representation of an entity is usually a string, even for numerical information such as dates. THe normalized ISO format for this date
+    would be '1541-01-01'. A normalized representation for entities enables your knowledge base to connect all the different things that happened in the 
+    world on that same date to that same node (entity) in your graph.
+    Normalizing named entities and resolving ambiguities is often called coreference resolution or anaphora resolution, especially for pronouns or
+    other 'names' relying on context. Normalization of named entities ensures that spelling and naming variations don't pollute your vocabulary of entity
+    names with confounding, redundant names. 
+'''
