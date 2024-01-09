@@ -108,3 +108,35 @@ Entity name normalization
     other 'names' relying on context. Normalization of named entities ensures that spelling and naming variations don't pollute your vocabulary of entity
     names with confounding, redundant names. 
 '''
+
+
+'''
+Segmentation
+    Document 'chunking' is useful for creating semi-structured data about documents that can make it easier to search, filter, and sort documents for 
+    information retrieval. When you divide natural language text into meaningful pieces, it's called segmentation. The resulting segments can be phrases,
+    sentences, quotes, paragraphs, or even entire sections of a long document.
+    Sentences are the most common chunk for most information extraction problems. Grammatically correct English language sentences must contain a subject (noun)
+    and a verb, which means they'll usually have at least one relation or fact worth extracting. 
+    For chatbot pipeline, your goal is to segment documents into sentences, or statements.
+
+Sentence Segmentation
+    It is usually the first step in an information extraction pipeline. It helps isolate facts from each other so that you can associate the right price with
+    the right thing in a string. Sentences contain a logically cohesive statement about the world. 
+    Manually programmed algorithms and statitical models
+'''
+
+# Sentence segmentation with regular expressions
+import re
+import string
+re.split(r'[!.?]+[ $]', "Hello World.... Are you there?!?! I'm going to Mars!")
+re.split(r'(?<!\d)\.|\.(?!\d)', "I went to GT.You?")
+
+
+
+'''
+Summary
+    A knowledge graph can be built to store relationships between entities.
+    Regular expressions are mini-programming language that can isolate and extract information.
+    POS tagging allows you to extract relationships between entities mentioned in a sentence.
+    Segmenting sentences requires more that just splitting on periods and exclamation marks.
+'''
