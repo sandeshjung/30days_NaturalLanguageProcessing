@@ -168,3 +168,5 @@ tmp
 
 # Ignore files with ".gz" extension
 *.gz
+
+.vscode/
